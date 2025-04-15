@@ -1,0 +1,51 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+char* trimSpaces(char* s) {
+    int len = strlen(s);
+    char* trimmed = (char*)malloc(len + 1);
+    int i = 0, j = 0;
+
+    while (s[i] == ' ') i++;
+
+    int space = 0;
+    for (; i < len; i++) {
+        if (s[i] == ' ') {
+            space = 1;
+        } else {
+            if (space && j > 0) trimmed[j++] = ' ';
+            trimmed[j++] = s[i];
+            space = 0;
+        }
+    }
+
+    if (j > 0 && trimmed[j - 1] == ' ') j--;
+    trimmed[j] = '\0';
+    return trimmed;
+}
+
+void reverse(char* s, int left, int right) {
+    while (left < right) {
+        char tmp = s[left];
+        s[left++] = s[right];
+        s[right--] = tmp;
+    }
+}
+
+char* reverseWords(char* s) {
+    char* cleaned = trimSpaces(s);
+    int len = strlen(cleaned);
+    reverse(cleaned, 0, len - 1);
+
+    int start = 0;
+    for (int i = 0; i <= len; i++) {
+        if (cleaned[i] == ' ' || cleaned[i] == '\0') {
+            reverse(cleaned, start, i - 1);
+            start = i + 1;
+        }
+    }
+
+    return cleaned;
+}
+    
