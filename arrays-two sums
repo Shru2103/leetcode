@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define HASH_SIZE 20011  // A prime number for better distribution
+
+typedef struct {
+    int key;
+    int index;
+    bool used;
+} HashNode;
+
+int hash(int key) {
+    return (key % HASH_SIZE + HASH_SIZE) % HASH_SIZE;
+}
+
+void insert(HashNode* map, int key, int index) {
+    int h = hash(key);
+    while (map[h].used) {
+        h = (h + 1) % HASH_SIZE;
+    }
+    map[h].key = key;
+    map[h].index = index;
+    map[h].used = true;
+}
+
+bool find(HashNode* map, int key, int* index) {
+    int h = hash(key);
+    int start = h;
+    while (map[h].used) {
+        if (map[h].key == key) {
+            *index = map[h].index;
+            return true;
+        }
+        h = (h + 1) % HASH_SIZE;
+        if (h == start) break;  // Full cycle, not found
+    }
+    return false;
+}
+
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    HashNode* map = (HashNode*)calloc(HASH_SIZE, sizeof(HashNode));
+    int* result = (int*)malloc(2 * sizeof(int));
+
+    for (int i = 0; i < numsSize; i++) {
+        int complement = target - nums[i];
+        int index;
+        if (find(map, complement, &index)) {
+            result[0] = index;
+            result[1] = i;
+            *returnSize = 2;
+            free(map);
+            return result;
+        }
+        insert(map, nums[i], i);
+    }
+
+    *returnSize = 0;
+    free(result);
+    free(map);
+    return NULL;
+}
