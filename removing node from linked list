@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to reverse the linked list
+
 struct ListNode* reverseList(struct ListNode* head) {
     struct ListNode* prev = NULL;
     struct ListNode* curr = head;
@@ -17,26 +17,26 @@ struct ListNode* reverseList(struct ListNode* head) {
     return prev;
 }
 
-// Function to remove nodes from the linked list
+
 struct ListNode* removeNodes(struct ListNode* head) {
-    // Reverse the linked list first
+    
     head = reverseList(head);
     
     struct ListNode* curr = head;
-    int max_val = curr->val;  // Initialize max_val to the first node's value
+    int max_val = curr->val;  
     
     while (curr != NULL && curr->next != NULL) {
-        // If current node's next value is less than the max_val, remove it
+       
         if (curr->next->val < max_val) {
             struct ListNode* temp = curr->next;
-            curr->next = curr->next->next;  // Skip the node
-            free(temp);  // Free the removed node
+            curr->next = curr->next->next;  
+            free(temp);  
         } else {
-            curr = curr->next;  // Move to the next node
-            max_val = curr->val;  // Update max_val to the current node's value
+            curr = curr->next;  
+            max_val = curr->val; 
         }
     }
 
-    // Reverse the list back to the original order
+   
     return reverseList(head);
 }
