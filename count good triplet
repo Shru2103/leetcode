@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-// Function to count the number of good triplets
+
 int countGoodTriplets(int* arr, int arrSize, int a, int b, int c) {
     int count = 0;
     
-    // Brute force approach: check all triplets (i, j, k)
+    
     for (int i = 0; i < arrSize - 2; i++) {
         for (int j = i + 1; j < arrSize - 1; j++) {
             for (int k = j + 1; k < arrSize; k++) {
-                // Check if the triplet satisfies the conditions
+               
                 if (abs(arr[i] - arr[j]) <= a && abs(arr[j] - arr[k]) <= b && abs(arr[i] - arr[k]) <= c) {
                     count++;
                 }
