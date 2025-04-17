@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define HASH_SIZE 20011  // A prime number for better distribution
+#define HASH_SIZE 20011  
 
 typedef struct {
     int key;
@@ -33,7 +33,7 @@ bool find(HashNode* map, int key, int* index) {
             return true;
         }
         h = (h + 1) % HASH_SIZE;
-        if (h == start) break;  // Full cycle, not found
+        if (h == start) break;  
     }
     return false;
 }
